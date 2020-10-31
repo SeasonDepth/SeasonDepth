@@ -1,6 +1,4 @@
 # SeasonDepth
-Paper "Cross-Season Monocular Depth Prediction under Multiple Environments" is submitted to ECCV 2020.
+Paper "SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments" is submitted to ICRA 2021 by [Hanjiang Hu](https://hanjianghu.github.io/), Baoquan Yang, Weiang Shi, Zhijian Qiao, and [Hesheng Wang](https://scholar.google.com/citations?user=q6AY9XsAAAAJ&hl=zh-CN).
 
-Code and dataset will be available soon.
-
-Urban test set is [here](https://1drv.ms/u/s!AsaiOmaBJuR-avXCI2nWdf-IPeo?e=GR9SBm) and the detailed environment correspondence of env01 to env12 is consistent with the paper.
+Dataset and benchmark will be available soon.
