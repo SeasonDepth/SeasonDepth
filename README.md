@@ -1,5 +1,5 @@
 # SeasonDepth
-[Paper](https://arxiv.org/pdf/2011.04408.pdf) "SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments" is submitted to ICRA 2021 by [Hanjiang Hu](https://hanjianghu.github.io/), Baoquan Yang, Weiang Shi, [Zhijian Qiao](https://github.com/qiaozhijian), and [Hesheng Wang](https://scholar.google.com/citations?user=q6AY9XsAAAAJ&hl=zh-CN).
+This project is for work ([arXiv](https://arxiv.org/pdf/2011.04408.pdf)) "SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments" by [Hanjiang Hu](https://hanjianghu.github.io/), Baoquan Yang, Weiang Shi, [Zhijian Qiao](https://github.com/qiaozhijian), and [Hesheng Wang](https://scholar.google.com/citations?user=q6AY9XsAAAAJ&hl=zh-CN).
 
 [![SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments](https://res.cloudinary.com/marcomontalbano/image/upload/v1604928935/video_to_markdown/images/youtube--I2d4_wE4axs-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/I2d4_wE4axs "SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments")
 
