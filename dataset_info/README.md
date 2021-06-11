@@ -5,9 +5,9 @@ benchmark monocular depth prediction algorithms under changing environments.
 
 This dataset is based on the CMU Visual Localization dataset described here:
 ```
-Hernan Badino, Daniel Huber, and Takeo Kanade. 
-The CMU Visual Localization Data Set. 
-http://3dvis.ri.cmu.edu/data-sets/localization, 2011.
+Hernán Badino, Daniel Huber, and Takeo Kanade. 
+Visual topometric localization. 
+In 2011 IEEE Intelligent Vehicles Symposium (IV), pages 794–799. IEEE, 2011.
 ```
 This SeasonDepth  dataset also refers to CMU-Seasons dataset here:
 ```
@@ -16,7 +16,7 @@ Benchmarking 6DOF Outdoor Visual Localization in Changing Conditions.
 Conference on Computer Vision and Pattern Recognition (CVPR) 2018 
 ```
 
-The test set of SeasonDepth dataset basically includes images from *slice2, slice3, slice7, slice8* under urban area in CMU-Seasons dataset. The depth maps are recontructed through SfM algorithm with carefully mannual refinement as groundtruths to evaulate the robustness of depth prediction models from KITTI leaderboard under multiple environmental conditions.
+The test set of SeasonDepth dataset basically includes images from *slice2, slice3, slice7, slice8* under urban area in CMU-Seasons dataset. The depth maps are reconstructed through SfM algorithm with carefully mannual refinement as groundtruths to evaulate the robustness of depth prediction models from KITTI leaderboard under multiple environmental conditions.
 
 ## License
 SeasonDepth dataset is built on CMU Visual Localization dataset created by 
@@ -47,11 +47,13 @@ following three sources:
   year={2018},
 }
 
-@misc{Badino2011,
-  author = {Badino, Hernan and Huber, Daniel and Kanade, Takeo},
-  title = {{The CMU Visual Localization Data Set}},
-  year = {2011},
-  howpublished = {\url{http://3dvis.ri.cmu.edu/data-sets/localization}}
+@inproceedings{badino2011visual,
+  title={Visual topometric localization},
+  author={Badino, Hern{\'a}n and Huber, Daniel and Kanade, Takeo},
+  booktitle={2011 IEEE Intelligent Vehicles Symposium (IV)},
+  pages={794--799},
+  year={2011},
+  organization={IEEE}
 }
 ```
 
@@ -100,5 +102,5 @@ The details about the instruction for the benchmark can be found on the [toolkit
 1. Torsten Sattler, Will Maddern, Carl Toft, Akihiko Torii, Lars Hammarstrand, Erik Stenborg, Daniel Safari, Masatoshi Okutomi, Marc Pollefeys, Josef Sivic, et al. Benchmarking 6dof outdoor visual localization in changing conditions. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 8601–8610, 2018. https://www.visuallocalization.net/.
 2. Aayush Bansal, Hernan Badino, and Daniel Huber. Understanding how camera configuration and environ337
 mental conditions affect appearance-based localization. In IEEE Intelligent Vehicles (IV), 2014.
-3. Hernan Badino, Daniel Huber, and Takeo Kanade. The CMU Visual Localization Data Set. http://3dvis.ri.cmu.edu/data-sets/localization, 2011.
+3. Hernán Badino, Daniel Huber, and Takeo Kanade. Visual topometric localization. In 2011 IEEE Intelligent Vehicles Symposium (IV), pages 794–799. IEEE, 2011.
 4. Torsten Sattler *et al.*, `README.md`. https://data.ciirc.cvut.cz/public/projects/2020VisualLocalization/Extended-CMU-Seasons/, 2018.
