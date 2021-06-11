@@ -1,30 +1,74 @@
-# SeasonDepth
-This project is for work ([arXiv](https://arxiv.org/pdf/2011.04408.pdf)) "SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments" by [Hanjiang Hu](https://hanjianghu.github.io/), Baoquan Yang, Weiang Shi, [Zhijian Qiao](https://github.com/qiaozhijian), and [Hesheng Wang](https://scholar.google.com/citations?user=q6AY9XsAAAAJ&hl=zh-CN).
+# SeasonDepth Benchmark Toolkit
+This package provides a python toolkit for evaluation on the [SeasonDepth](https://seasondepth.github.io/) dataset([download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Dataset/14731323), [paper](https://arxiv.org/abs/2011.04408)). SeasonDepth is a new monocular depth prediction dataset with multi-traverse changing environments. Several representative baseline methods with recent open-source state-of-the-art pretrained models on KITTI leaderboard[[1]](#references) are evaluated on the SeasonDepth dataset without fine-tuning.
+## Quick Dataset Visualization
+![](figure/overview.png)
+## Requirement
+```shell script
+pip install opencv-python
+pip install xlwt xlrd tqdm
+pip install numpy
+```
+## Evaluation
+### 1. Dataset preparation
+Download SeasonDepth dataset and create the directories below:
+```plain
+└── SeasonDepth_DATASET_ROOT
+    ├── depth
+    │   ├── slice2
+    │   ├── slice3
+    │   ├── slice7
+    │   └── slice8
+    ├── images
+    │   ├── slice2
+    │   ├── slice3
+    │   ├── slice7
+    │   └── slice8
+```
+### 2. Your results preparation
+Evaluate your model on SeasonDepth and organize your results as follows:
+```plain
+└── YOUR_RESULT_ROOT
+    ├── results2_c0
+    │   ├── env00
+    │   │   ├──  img_00119_c0_1303398474779439us.png
+    │   │   ├──  *.png
+    │   ├── env**
+    ├── results2_c1
+    ├── results3_c0
+    ├── results3_c1
+    ├── results7_c0
+    ├── results7_c1
+    ├── results8_c0
+    └── results8_c1
+```
+After that, run the evaluation script in the folder `eval_code` to find your evaluation results.
+```shell
+python evaluation.py --pred_path YOUR_RESULT_ROOT --ground_path SeasonDepth_DATASET_ROOT
+```
+You can also add some following arguments if you want:
+```shell
+--gui # To watch the results of evaluation. Press q to exit and any other key to continue.
+--disp2depth # To convert disparity map to depth map for correct evaluation.
+--not_clean # To generate all the intermediate xls files during evaluating.
+```
 
-[![SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments](https://res.cloudinary.com/marcomontalbano/image/upload/v1604928935/video_to_markdown/images/youtube--I2d4_wE4axs-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/I2d4_wE4axs "SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments")
+## Ealuation Results
+![](figure/experiment.png)
 
-## Test Set for Benchmark
-The spilt test set of SeasonDepth is selected from the Urban slices from [CMU-Seasons](https://www.visuallocalization.net/datasets) dataset.
-### Download
-The images used for zero-shot experimental evaluation are available [HERE](https://drive.google.com/file/d/1UBe9K69Cjmq0m206UD2-uI4gosAJ16UA/view?usp=sharing).
-### Submission
-Since the benchmark website is currently under construction, please send your test results to `SeasonDepth@outlook.com`. We will process your submission in several days and give you evaluation performance.
-The predicted depth map must be with `png` format in `16-bit`. The submission must be in a `zip` file with the inside folder structure below.
-> results_slice2_c0
->> env00
->>> img_c0_0001.png
->>>
->>> img_c0_0002.png
->>>
->>> ...
->>
->> env00
->>
->> ...
->
-> results_slice2_c0
->
-> ...
+Qualitative comparison results with illumination or vegetation changes are shown below and more can be found in [our paper](https://arxiv.org/abs/2011.04408).
 
-## For Training and Validation Set
-The training and validation set with reconstructed depth map groundtruths will be available soon.
+![](figure/exp_visual.png)
+## Cite our work
+Please cite the following papers if you use our dataset:
+```latex
+@article{SeasonDepth,
+  title={SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments},
+  author={Hu, Hanjiang and Yang, Baoquan and Qiao, Zhijian and Zhao, Ding and Wang, Hesheng},
+  journal={arXiv preprint arXiv:2011.04408},
+  year={2021}
+}
+```
+
+
+## References
+[1] A. Geiger, P. Lenz, C. Stiller, and R. Urtasun, "Vision meets robotics: The KITTI dataset," Int. J. Robot. Research (IJRR), vol. 32, no. 11, pp. 1231–1237, Sep. 2013. [http://www.cvlibs.net/datasets/kitti/](http://www.cvlibs.net/datasets/kitti/)
