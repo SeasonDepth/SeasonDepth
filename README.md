@@ -1,5 +1,5 @@
 # SeasonDepth Benchmark Toolkit
-This package provides a python toolkit for evaluation on the [SeasonDepth](https://seasondepth.github.io/) dataset([download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Dataset/14731323), [paper](https://arxiv.org/abs/2011.04408)). SeasonDepth is a new monocular depth prediction dataset with multi-traverse changing environments. Several representative baseline methods with recent open-source state-of-the-art pretrained models on KITTI leaderboard[[1]](#references) are evaluated on the SeasonDepth dataset without fine-tuning.
+This package provides a python toolkit for evaluation on the [SeasonDepth](https://seasondepth.github.io/) dataset([download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Dataset/14731323), [paper](https://arxiv.org/abs/2011.04408)). SeasonDepth is a new monocular depth prediction dataset with multi-traverse changing environments. Several representative baseline methods with recent open-source state-of-the-art models on KITTI leaderboard[[1]](#references) and fine-tuned models are evaluated on the SeasonDepth dataset.
 ## Quick Dataset Visualization
 ![](figure/overview.png)
 ## Requirement
@@ -10,7 +10,7 @@ pip install numpy
 ```
 ## Evaluation
 ### 1. Dataset preparation
-Download SeasonDepth dataset and create the directories below:
+Download SeasonDepth dataset and create the directories below. The slices in detail can be found [here](https://data.ciirc.cvut.cz/public/projects/2020VisualLocalization/Extended-CMU-Seasons/).
 ```plain
 └── SeasonDepth_DATASET_ROOT
     ├── depth

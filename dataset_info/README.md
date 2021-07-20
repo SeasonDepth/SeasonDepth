@@ -1,6 +1,6 @@
-# SeasonDepth Test Set for Benchmark
+# SeasonDepth Test and Training Set for Benchmark
 
-This is the public release of the SeasonDepth test set that is used in this paper to 
+This is the public release of the SeasonDepth test and training set that are used in this paper to 
 benchmark monocular depth prediction algorithms under changing environments.
 
 This dataset is based on the CMU Visual Localization dataset described here:
@@ -16,7 +16,7 @@ Benchmarking 6DOF Outdoor Visual Localization in Changing Conditions.
 Conference on Computer Vision and Pattern Recognition (CVPR) 2018 
 ```
 
-The test set of SeasonDepth dataset basically includes images from *slice2, slice3, slice7, slice8* under urban area in CMU-Seasons dataset. The depth maps are reconstructed through SfM algorithm with carefully mannual refinement as groundtruths to evaulate the robustness of depth prediction models from KITTI leaderboard under multiple environmental conditions.
+The test set of SeasonDepth dataset basically includes images from *slice2, slice3, slice7, slice8* and training set for version 1.0 includes *slice6* under urban area in CMU-Seasons dataset. The depth maps are reconstructed through SfM algorithm with carefully mannual refinement as groundtruths to evaulate the robustness of depth prediction models from KITTI leaderboard under multiple environmental conditions.
 
 ## License
 SeasonDepth dataset is built on CMU Visual Localization dataset created by 
@@ -66,7 +66,7 @@ provided with this dataset, please [contact us](mailto:hanjianghu@cmu.edu).
 
 ## Provided Files
 The following files are provided with this release of the SeasonDepth dataset in the root directory.
-* `intrinsics.txt`: Contains the intrinsic calibrations of the two cameras used in the dataset from `intrinsics.txt` [here](https://data.ciirc.cvut.cz/public/projects/2020VisualLocalization/Extended-CMU-Seasons/). Both the RGB images and depth maps have been undistorted according to the intrinsics.
+* `intrinsics.txt`: Contains the intrinsic calibrations of the two cameras used in the dataset from `intrinsics.txt` [here](https://data.ciirc.cvut.cz/public/projects/2020VisualLocalization/Extended-CMU-Seasons/intrinsics.txt). Both the RGB images and depth maps have been undistorted according to the intrinsics.
 * `RGB.zip`: Contains all RGB images from `env00` to `env11` ended with `.jpg`. The `c0` subfolder inside each environment indicates the images are captured from the camera 0 and `c1` is from camera 1.
 * `depth.zip`: Contains all depth images from `env00` to `env11` ended with `.png`. The `c0` subfolder inside each environment indicates the images are captured from the camera 0 and `c1` is from camera 1. The file name of depth map is identical to that of corresponding RGB image and the depth value is stored in `uint16`.
 
