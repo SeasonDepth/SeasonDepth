@@ -57,6 +57,7 @@ You can also add some following arguments if you want:
 
 Qualitative comparison results with illumination or vegetation changes are shown below and more can be found in [our paper](https://arxiv.org/abs/2011.04408).
 
+![](figure/vis_results.png)
 ![](figure/exp_visual.png)
 ## Cite our work
 Please cite the following papers if you use our dataset:
