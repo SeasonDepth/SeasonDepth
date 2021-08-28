@@ -16,13 +16,33 @@ Benchmarking 6DOF Outdoor Visual Localization in Changing Conditions.
 Conference on Computer Vision and Pattern Recognition (CVPR) 2018 
 ```
 
-The test set of SeasonDepth dataset basically includes images from *slice2, slice3, slice7, slice8* and training set for version 1.0 includes *slice6* under urban area in CMU-Seasons dataset. The depth maps are reconstructed through SfM algorithm with carefully mannual refinement as groundtruths to evaulate the robustness of depth prediction models from KITTI leaderboard under multiple environmental conditions.
+The test set of SeasonDepth dataset basically includes images from *slice2, slice3, slice7, slice8* and training set for version 1.1 includes *slice4，slice5，slice6* under urban area in CMU-Seasons dataset. The depth maps are reconstructed through SfM algorithm with carefully mannual refinement as groundtruths to evaulate the robustness of depth prediction models from KITTI leaderboard under multiple environmental conditions.
+
+> The format of test set can be found [here](https://github.com/SeasonDepth/SeasonDepth/blob/master/README.md#evaluation). The training set is organized as below:
+```plain
+└── SeasonDepth_trainingset_v1.1
+    ├── slice4
+    │   ├── env00
+    		├── c0
+    			├── images
+    			├── depth_maps
+    		├── c1
+    			├── images
+    			├── depth_maps
+    │   ├── env01
+    │   ├── ...
+    │   └── env11
+    ├── slice5
+    ├── slice6
+    ├── README.md
+    ├── intrinsics.txt
+```
 
 ## License
 SeasonDepth dataset is built on CMU Visual Localization dataset created by 
 Hernan Badino, Daniel Huber, and Takeo Kanade and also with a reference of CMU-Seasons dataset derived by Torsten Sattler et al.
 As the previous works are licensed under 
-[Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License](https://creativecommons.org/licenses/by-nc-sa/3.0/) from the README file [here](https://data.ciirc.cvut.cz/public/projects/2020VisualLocalization/Extended-CMU-Seasons/), SeasonDepth is also licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License](https://creativecommons.org/licenses/by-nc-sa/4.0/) from the README file [here](https://data.ciirc.cvut.cz/public/projects/2020VisualLocalization/Extended-CMU-Seasons/), SeasonDepth is also licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 
 Please see this [webpage](https://www.visuallocalization.net/) and  if you are
