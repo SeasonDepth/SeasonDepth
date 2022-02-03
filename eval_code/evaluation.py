@@ -169,11 +169,11 @@ def evaluation(pred_path, gt_path, xls_path):
         worksheet.write(0, 3, "img_name")
         xl_write_line(worksheet, 0, 4, xl_head)
         xls_counter[env] = [1, 1]
-    if os.path.exists("{}/result.json".format(args.results_pth)):
-        process_result = json.load(open("{}/result.json".format(args.results_pth), 'r'))
+    if os.path.exists("{}/result.json".format(xls_path)):
+        process_result = json.load(open("{}/result.json".format(xls_path), 'r'))
     else:
         process_result = process_dataset(pred_path, gt_path)
-        with open("{}/result.json".format(args.results_pth), 'w') as f:
+        with open("{}/result.json".format(xls_path), 'w') as f:
             json.dump(process_result, f)
     for img in process_result:
         res = process_result[img]
@@ -184,11 +184,10 @@ def evaluation(pred_path, gt_path, xls_path):
         worksheet.write(xls_counter[env][c], 3 * c, img)
         xl_write_line(worksheet, xls_counter[env][c], 3 * c + 1, res)
         xls_counter[env][c] += 1
-    workbook.save(xls_path)
+    workbook.save(xls_path + "/result.xls")
 
     if args.gui:
         cv2.destroyAllWindows()
-    print(xls_counter)
     return xls_counter
 
 
@@ -205,6 +204,15 @@ def reg_path(path):
     return reg
 
 
+def write_ind(ws, ind_dict: dict, counter):
+    ws.write(counter * 3 + 1, 1, np.average(ind_dict["abs_rel"]))
+    ws.write(counter * 3 + 2, 1, np.average(ind_dict["a1"]))
+    ws.write(counter * 3 + 1, 2, np.var(ind_dict["abs_rel"]))
+    ws.write(counter * 3 + 2, 2, np.var(ind_dict["a1"]))
+    ws.write(counter * 3 + 1, 3, rng(ind_dict["abs_rel"]))
+    ws.write(counter * 3 + 2, 3, rng_a1(ind_dict["a1"]))
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
     pred_pth = reg_path(args.pred_pth)
@@ -217,46 +225,59 @@ if __name__ == "__main__":
     print("Start evaluation ...")
     if not os.path.exists(results_pth):
         os.makedirs(results_pth)
-    xls_path = os.path.join(results_pth, "result.xls")
-    xls_counter = evaluation(pred_pth, gt_pth, xls_path)
-    result_xls = xlrd.open_workbook(xls_path)
 
+    slices = os.listdir(pred_pth)
     eval_path = os.path.join(results_pth, "evaluation.xls")
     workbook = xlwt.Workbook(encoding='utf-8')
     total_dict = {"abs_rel": [], "a1": []}
-    for env in tqdm.tqdm(env_list):
-        worksheet = workbook.add_sheet(env)
-        xl_write_line(worksheet, 0, 1, ['avg', 'var', 'rng'])
-        worksheet.write(1, 0, "abs_rel")
-        worksheet.write(2, 0, "a1")
-        result_sheet = result_xls.sheet_by_name(env)
-        env_dict = {"abs_rel": [], "a1": []}
-        for row in range(1, xls_counter[env][0]):
-            # print(env,row)
-            env_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
-            env_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
-            total_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
-            total_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
+    for s in sorted(slices):
+        print("Start evaluating {}".format(s))
+        _pred_pth = os.path.join(pred_pth, s)
+        _gt_pth = os.path.join(gt_pth, s)
+        xls_path = os.path.join(results_pth, s)
+        if not os.path.exists(os.path.join(results_pth, s)):
+            os.makedirs(os.path.join(results_pth, s))
+        xls_counter = evaluation(_pred_pth, _gt_pth, xls_path)
 
-        for row in range(1, xls_counter[env][1]):
-            env_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
-            env_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
-            total_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
-            total_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
-        worksheet.write(1, 1, np.average(env_dict["abs_rel"]))
-        worksheet.write(2, 1, np.average(env_dict["a1"]))
-        worksheet.write(1, 2, np.var(env_dict["abs_rel"]))
-        worksheet.write(2, 2, np.var(env_dict["a1"]))
-        worksheet.write(1, 3, rng(env_dict["abs_rel"]))
-        worksheet.write(2, 3, rng_a1(env_dict["a1"]))
+        result_xls = xlrd.open_workbook(xls_path + "/result.xls")
+        worksheet = workbook.add_sheet(s)
+        slice_dict = {"abs_rel": [], "a1": []}
+        e_counter = 0
+        for env in env_list:
+            # worksheet = workbook.add_sheet(env)
+            xl_write_line(worksheet, e_counter * 3, 1, ['avg', 'var', 'rng'])
+            worksheet.write_merge(e_counter * 3 + 1, e_counter * 3 + 2, 0, 0, env)
+            worksheet.write(e_counter * 3 + 1, 4, "abs_rel")
+            worksheet.write(e_counter * 3 + 2, 4, "a1")
+            result_sheet = result_xls.sheet_by_name(env)
+            env_dict = {"abs_rel": [], "a1": []}
+            for row in range(1, xls_counter[env][0]):
+                env_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
+                env_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
+                total_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
+                total_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
+                slice_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
+                slice_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
+            for row in range(1, xls_counter[env][1]):
+                env_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
+                env_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
+                total_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
+                total_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
+                slice_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
+                slice_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
+            if len(env_dict["abs_rel"]) > 0:
+                write_ind(worksheet, env_dict, e_counter)
+            e_counter += 1
+        worksheet.write_merge(e_counter * 3 + 1, e_counter * 3 + 2, 0, 0, s + "_total")
+        worksheet.write(e_counter * 3 + 1, 4, "abs_rel")
+        worksheet.write(e_counter * 3 + 2, 4, "a1")
+        write_ind(worksheet, slice_dict, e_counter)
 
     worksheet = workbook.add_sheet("total")
-    worksheet.write(1, 1, np.average(total_dict["abs_rel"]))
-    worksheet.write(2, 1, np.average(total_dict["a1"]))
-    worksheet.write(1, 2, np.var(total_dict["abs_rel"]))
-    worksheet.write(2, 2, np.var(total_dict["a1"]))
-    worksheet.write(1, 3, rng(total_dict["abs_rel"]))
-    worksheet.write(2, 3, rng_a1(total_dict["a1"]))
+    xl_write_line(worksheet, 0, 1, ['avg', 'var', 'rng'])
+    worksheet.write(1, 0, "abs_rel")
+    worksheet.write(2, 0, "a1")
+    write_ind(worksheet, total_dict, 0)
     workbook.save(eval_path)
 
     print('**************************************************')
