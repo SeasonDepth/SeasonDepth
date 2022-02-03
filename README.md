@@ -15,11 +15,15 @@ Download SeasonDepth dataset and create the directories below. The slices in det
 └── SeasonDepth_DATASET_ROOT
     ├── depth
     │   ├── slice2
+    │   │   ├──  img_00119_c0_1303398474779439us.png
+    │   │   ├──  *.png
     │   ├── slice3
     │   ├── slice7
     │   └── slice8
     ├── images
     │   ├── slice2
+    │   │   ├──  img_00119_c0_1303398474779439us.jpg
+    │   │   ├──  *.jpg
     │   ├── slice3
     │   ├── slice7
     │   └── slice8
@@ -28,22 +32,16 @@ Download SeasonDepth dataset and create the directories below. The slices in det
 Evaluate your model on SeasonDepth and organize your results as follows:
 ```plain
 └── YOUR_RESULT_ROOT
-    ├── results2_c0
-    │   ├── env00
-    │   │   ├──  img_00119_c0_1303398474779439us.png
-    │   │   ├──  *.png
-    │   ├── env**
-    ├── results2_c1
-    ├── results3_c0
-    ├── results3_c1
-    ├── results7_c0
-    ├── results7_c1
-    ├── results8_c0
-    └── results8_c1
+    ├── slice2
+    │   ├──  img_00119_c0_1303398474779439us.png
+    │   ├──  *.png
+    ├── slice3
+    ├── slice7
+    └── slice8
 ```
 After that, run the evaluation script in the folder `eval_code` to find your evaluation results.
 ```shell
-python evaluation.py --pred_path YOUR_RESULT_ROOT --ground_path SeasonDepth_DATASET_ROOT
+python evaluation.py --pred_pth YOUR_RESULT_ROOT --gt_pth SeasonDepth_DATASET_ROOT
 ```
 You can also add some following arguments if you want:
 ```shell
