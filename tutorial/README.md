@@ -1,6 +1,6 @@
 # Tutorial for the SeasonDepth Prediction Challenge
 
-## Access to the dataset set
+## Access to the dataset
 
 Follow the link of [training set v1.1 download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Training_Dataset/16442025) and [validation set download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Dataset/14731323). Refer to our [website](https://seasondepth.github.io/) and [benchmark toolkit](https://github.com/SeasonDepth/SeasonDepth) for more details about the data structure.
 
