@@ -278,7 +278,7 @@ if __name__ == "__main__":
                 total_dict[env]["a1"].append(float(result_sheet.cell_value(row, 5)))
                 slice_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
                 slice_dict[env]["a1"].append(float(result_sheet.cell_value(row, 5)))
-            if len(env_dict["abs_rel"]) > 0:
+            if len(env_dict[env]["abs_rel"]) > 0:
                 write_ind(worksheet, env_dict[env], e_counter)
             e_counter += 1
         worksheet.write_merge(e_counter * 3 + 1, e_counter * 3 + 2, 0, 0, s + "_total")
@@ -290,10 +290,10 @@ if __name__ == "__main__":
             slice_dict_merge["a1"] += slice_dict[env]["a1"]
         worksheet.write(e_counter * 3 + 1, 1, np.average(slice_dict_merge["abs_rel"]))
         worksheet.write(e_counter * 3 + 2, 1, np.average(slice_dict_merge["a1"]))
-        worksheet.write(e_counter * 3 + 1, 2, np.var([np.average(slice_dict[env]["abs_rel"] for env in slice_dict.keys())]))
-        worksheet.write(e_counter * 3 + 2, 2, np.var([np.average(slice_dict[env]["a1"] for env in slice_dict.keys())]))
-        worksheet.write(e_counter * 3 + 1, 3, rng([np.average(slice_dict[env]["abs_rel"] for env in slice_dict.keys())]))
-        worksheet.write(e_counter * 3 + 2, 3, rng_a1([np.average(slice_dict[env]["a1"] for env in slice_dict.keys())]))
+        worksheet.write(e_counter * 3 + 1, 2, np.var([np.average(slice_dict[env]["abs_rel"]) for env in slice_dict.keys()]))
+        worksheet.write(e_counter * 3 + 2, 2, np.var([np.average(slice_dict[env]["a1"]) for env in slice_dict.keys()]))
+        worksheet.write(e_counter * 3 + 1, 3, rng([np.average(slice_dict[env]["abs_rel"]) for env in slice_dict.keys()]))
+        worksheet.write(e_counter * 3 + 2, 3, rng_a1([np.average(slice_dict[env]["a1"]) for env in slice_dict.keys()]))
 
     worksheet = workbook.add_sheet("total")
     xl_write_line(worksheet, 0, 1, ['avg', 'var', 'rng'])
@@ -305,10 +305,10 @@ if __name__ == "__main__":
         total_dict_merge["a1"] += total_dict[env]["a1"]
     worksheet.write(1, 1, np.average(total_dict_merge["abs_rel"]))
     worksheet.write(2, 1, np.average(total_dict_merge["a1"]))
-    worksheet.write(1, 2, np.var([np.average(total_dict[env]["abs_rel"] for env in total_dict.keys())]))
-    worksheet.write(2, 2, np.var([np.average(total_dict[env]["a1"] for env in total_dict.keys())]))
-    worksheet.write(1, 3, rng([np.average(total_dict[env]["abs_rel"] for env in total_dict.keys())]))
-    worksheet.write(2, 3, rng_a1([np.average(total_dict[env]["a1"] for env in total_dict.keys())]))
+    worksheet.write(1, 2, np.var([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]))
+    worksheet.write(2, 2, np.var([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]))
+    worksheet.write(1, 3, rng([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]))
+    worksheet.write(2, 3, rng_a1([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]))
     workbook.save(eval_path)
 
     print('**************************************************')
@@ -316,8 +316,8 @@ if __name__ == "__main__":
     print('Results:')
     print('AbsRel Average:', format(np.average(total_dict_merge["abs_rel"]), '.4f'))
     print('a1 Average:', format(np.average(total_dict_merge["a1"]), '.4f'))
-    print('AbsRel Variance 10^(-2):', format(np.var([np.average(total_dict[env]["abs_rel"] for env in total_dict.keys())]) * 100, '.4f'))
-    print('a1 Variance 10^(-2):', format(np.var([np.average(total_dict[env]["a1"] for env in total_dict.keys())]) * 100, '.4f'))
-    print('AbsRel Relative Range:', format(rng([np.average(total_dict[env]["abs_rel"] for env in total_dict.keys())]), '.4f'))
-    print('a1 Relative Range:', format(rng_a1([np.average(total_dict[env]["a1"] for env in total_dict.keys())]), '.4f'))
+    print('AbsRel Variance 10^(-2):', format(np.var([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]) * 100, '.4f'))
+    print('a1 Variance 10^(-2):', format(np.var([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]) * 100, '.4f'))
+    print('AbsRel Relative Range:', format(rng([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]), '.4f'))
+    print('a1 Relative Range:', format(rng_a1([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]), '.4f'))
     print('See more details in:', os.path.join(eval_path))
