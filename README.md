@@ -50,7 +50,17 @@ You can also add some following arguments if you want:
 --not_clean # To generate all the intermediate xls files during evaluating.
 ```
 
-## Ealuation Results
+### 3. Ranking method
+
+We use the following method to evaluate rank in SeasonDepth Challenge.
+
+```plain
+final_score = 0.15 * (RANK(absrel_avg) + RANK(a1_avg)) + 0.2 * (RANK(absrel_var) + RANK(a1_var)) + 0.15 * (RANK(absrel_rng) + RANK(a1_rng))
+```
+
+Final score of a method is related to its rank of all metrics, so your total score may change before deadline.
+
+## Evaluation Results
 ![](figure/results.png)
 
 Qualitative comparison results with illumination or vegetation changes are shown below and more can be found in [our paper](https://arxiv.org/abs/2011.04408).
