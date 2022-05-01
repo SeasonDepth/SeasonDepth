@@ -55,7 +55,7 @@ You can also add some following arguments if you want:
 We use the following method to evaluate rank in SeasonDepth Challenge.
 
 ```plain
-final_score = 0.15 * (RANK(absrel_avg) + RANK(a1_avg)) + 0.2 * (RANK(absrel_var) + RANK(a1_var)) + 0.15 * (RANK(absrel_rng) + RANK(a1_rng))
+final_score = 0.25 * (RANK(absrel_avg) + RANK(a1_avg)) + 0.2 * (RANK(absrel_var) + RANK(a1_var)) + 0.05 * (RANK(absrel_rng) + RANK(a1_rng))
 ```
 
 Final score of a method is related to its rank of all metrics, so your total score may change before deadline.
