@@ -1,5 +1,5 @@
 # SeasonDepth Benchmark Toolkit
-This package provides a python toolkit for evaluation on the [SeasonDepth](https://seasondepth.github.io/) dataset([test set download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Dataset/14731323), [training set v1.1 download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Training_Dataset/16442025), [fine-tuned models](https://drive.google.com/file/d/12Xt_l26ZTCq2M2Oim1BfS2ltur6cX7H6/view?usp=sharing), [paper](https://arxiv.org/abs/2011.04408)). SeasonDepth is a new monocular depth prediction dataset with multi-traverse changing environments. Several representative baseline methods with recent open-source state-of-the-art models on KITTI leaderboard[[1]](#references) and fine-tuned models are evaluated on the SeasonDepth dataset.
+This package provides a python toolkit for evaluation on the [SeasonDepth](https://seasondepth.github.io/) dataset([test set download](http://seasondepth-challenge.org/data/SeasonDepth_Challenge_test_depth_gt.zip), [validation set download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Dataset/14731323), [training set download](https://figshare.com/articles/dataset/SeasonDepth_Cross-Season_Monocular_Depth_Prediction_Training_Dataset/16442025), [paper](https://arxiv.org/abs/2011.04408)). SeasonDepth is a new monocular depth prediction dataset with multi-traverse changing environments. Several representative baseline methods with recent open-source state-of-the-art models on KITTI leaderboard[[1]](#references) are evaluated on the SeasonDepth dataset. Check more on [SeasonDepth Prediction Challenge](http://seasondepth-challenge.org/).
 ## Quick Dataset Visualization
 ![](figure/overview.png)
 ## Requirement
@@ -51,7 +51,11 @@ You can also add some following arguments if you want:
 ```
 
 ## Ealuation Results
-![](figure/results.png)
+Some baselines on SeasonDepth test set are evaluated below. The full leadboard of the test set can be found [here](http://seasondepth-challenge.org/leaderboard.html) with more models.
+![](figure/results_test.png)
+
+Also, we present the cross-dataset performance of monocular depth estimation from KITTI to the SeasonDepth dataset over our validation set.  Please refer to our [paper](https://arxiv.org/abs/2011.04408) for more details.
+![](figure/results_val.png)
 
 Qualitative comparison results with illumination or vegetation changes are shown below and more can be found in [our paper](https://arxiv.org/abs/2011.04408).
 
@@ -64,7 +68,7 @@ Please cite the following papers if you use our dataset:
   title={SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments},
   author={Hu, Hanjiang and Yang, Baoquan and Qiao, Zhijian and Zhao, Ding and Wang, Hesheng},
   journal={arXiv preprint arXiv:2011.04408},
-  year={2021}
+  year={2022}
 }
 ```
 
