@@ -213,6 +213,19 @@ def write_ind(ws, ind_dict: dict, counter):
     ws.write(counter * 3 + 2, 3, rng_a1(ind_dict["a1"]))
 
 
+EMPTY_DICT = {"env00": {"abs_rel": [], "a1": []},
+              "env01": {"abs_rel": [], "a1": []},
+              "env02": {"abs_rel": [], "a1": []},
+              "env03": {"abs_rel": [], "a1": []},
+              "env04": {"abs_rel": [], "a1": []},
+              "env05": {"abs_rel": [], "a1": []},
+              "env06": {"abs_rel": [], "a1": []},
+              "env07": {"abs_rel": [], "a1": []},
+              "env08": {"abs_rel": [], "a1": []},
+              "env09": {"abs_rel": [], "a1": []},
+              "env10": {"abs_rel": [], "a1": []},
+              "env11": {"abs_rel": [], "a1": []}}
+
 if __name__ == "__main__":
     args = parser.parse_args()
     pred_pth = reg_path(args.pred_pth)
@@ -229,7 +242,7 @@ if __name__ == "__main__":
     slices = os.listdir(pred_pth)
     eval_path = os.path.join(results_pth, "evaluation.xls")
     workbook = xlwt.Workbook(encoding='utf-8')
-    total_dict = {"abs_rel": [], "a1": []}
+    total_dict = EMPTY_DICT
     for s in sorted(slices):
         print("Start evaluating {}".format(s))
         _pred_pth = os.path.join(pred_pth, s)
@@ -241,7 +254,7 @@ if __name__ == "__main__":
 
         result_xls = xlrd.open_workbook(xls_path + "/result.xls")
         worksheet = workbook.add_sheet(s)
-        slice_dict = {"abs_rel": [], "a1": []}
+        slice_dict = EMPTY_DICT
         e_counter = 0
         for env in env_list:
             # worksheet = workbook.add_sheet(env)
@@ -250,43 +263,61 @@ if __name__ == "__main__":
             worksheet.write(e_counter * 3 + 1, 4, "abs_rel")
             worksheet.write(e_counter * 3 + 2, 4, "a1")
             result_sheet = result_xls.sheet_by_name(env)
-            env_dict = {"abs_rel": [], "a1": []}
+            env_dict = EMPTY_DICT
             for row in range(1, xls_counter[env][0]):
-                env_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
-                env_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
-                total_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
-                total_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
-                slice_dict["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
-                slice_dict["a1"].append(float(result_sheet.cell_value(row, 2)))
+                env_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
+                env_dict[env]["a1"].append(float(result_sheet.cell_value(row, 2)))
+                total_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
+                total_dict[env]["a1"].append(float(result_sheet.cell_value(row, 2)))
+                slice_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 1)))
+                slice_dict[env]["a1"].append(float(result_sheet.cell_value(row, 2)))
             for row in range(1, xls_counter[env][1]):
-                env_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
-                env_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
-                total_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
-                total_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
-                slice_dict["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
-                slice_dict["a1"].append(float(result_sheet.cell_value(row, 5)))
-            if len(env_dict["abs_rel"]) > 0:
-                write_ind(worksheet, env_dict, e_counter)
+                env_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
+                env_dict[env]["a1"].append(float(result_sheet.cell_value(row, 5)))
+                total_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
+                total_dict[env]["a1"].append(float(result_sheet.cell_value(row, 5)))
+                slice_dict[env]["abs_rel"].append(float(result_sheet.cell_value(row, 4)))
+                slice_dict[env]["a1"].append(float(result_sheet.cell_value(row, 5)))
+            if len(env_dict[env]["abs_rel"]) > 0:
+                write_ind(worksheet, env_dict[env], e_counter)
             e_counter += 1
         worksheet.write_merge(e_counter * 3 + 1, e_counter * 3 + 2, 0, 0, s + "_total")
         worksheet.write(e_counter * 3 + 1, 4, "abs_rel")
         worksheet.write(e_counter * 3 + 2, 4, "a1")
-        write_ind(worksheet, slice_dict, e_counter)
+        slice_dict_merge = {"abs_rel": [], "a1": []}
+        for env in slice_dict:
+            slice_dict_merge["abs_rel"] += slice_dict[env]["abs_rel"]
+            slice_dict_merge["a1"] += slice_dict[env]["a1"]
+        worksheet.write(e_counter * 3 + 1, 1, np.average(slice_dict_merge["abs_rel"]))
+        worksheet.write(e_counter * 3 + 2, 1, np.average(slice_dict_merge["a1"]))
+        worksheet.write(e_counter * 3 + 1, 2, np.var([np.average(slice_dict[env]["abs_rel"]) for env in slice_dict.keys()]))
+        worksheet.write(e_counter * 3 + 2, 2, np.var([np.average(slice_dict[env]["a1"]) for env in slice_dict.keys()]))
+        worksheet.write(e_counter * 3 + 1, 3, rng([np.average(slice_dict[env]["abs_rel"]) for env in slice_dict.keys()]))
+        worksheet.write(e_counter * 3 + 2, 3, rng_a1([np.average(slice_dict[env]["a1"]) for env in slice_dict.keys()]))
 
     worksheet = workbook.add_sheet("total")
     xl_write_line(worksheet, 0, 1, ['avg', 'var', 'rng'])
     worksheet.write(1, 0, "abs_rel")
     worksheet.write(2, 0, "a1")
-    write_ind(worksheet, total_dict, 0)
+    total_dict_merge = {"abs_rel": [], "a1": []}
+    for env in total_dict:
+        total_dict_merge["abs_rel"] += total_dict[env]["abs_rel"]
+        total_dict_merge["a1"] += total_dict[env]["a1"]
+    worksheet.write(1, 1, np.average(total_dict_merge["abs_rel"]))
+    worksheet.write(2, 1, np.average(total_dict_merge["a1"]))
+    worksheet.write(1, 2, np.var([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]))
+    worksheet.write(2, 2, np.var([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]))
+    worksheet.write(1, 3, rng([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]))
+    worksheet.write(2, 3, rng_a1([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]))
     workbook.save(eval_path)
 
     print('**************************************************')
     print('Well done!')
     print('Results:')
-    print('AbsRel Average:', format(np.average(total_dict["abs_rel"]), '.4f'))
-    print('a1 Average:', format(np.average(total_dict["a1"]), '.4f'))
-    print('AbsRel Variance 10^(-2):', format(np.var(total_dict["abs_rel"]) * 100, '.4f'))
-    print('a1 Variance 10^(-2):', format(np.var(total_dict["a1"]) * 100, '.4f'))
-    print('AbsRel Relative Range:', format(rng(total_dict["abs_rel"]), '.4f'))
-    print('a1 Relative Range:', format(rng_a1(total_dict["a1"]), '.4f'))
+    print('AbsRel Average:', format(np.average(total_dict_merge["abs_rel"]), '.4f'))
+    print('a1 Average:', format(np.average(total_dict_merge["a1"]), '.4f'))
+    print('AbsRel Variance 10^(-2):', format(np.var([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]) * 100, '.4f'))
+    print('a1 Variance 10^(-2):', format(np.var([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]) * 100, '.4f'))
+    print('AbsRel Relative Range:', format(rng([np.average(total_dict[env]["abs_rel"]) for env in total_dict.keys()]), '.4f'))
+    print('a1 Relative Range:', format(rng_a1([np.average(total_dict[env]["a1"]) for env in total_dict.keys()]), '.4f'))
     print('See more details in:', os.path.join(eval_path))
