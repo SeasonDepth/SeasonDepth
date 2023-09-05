@@ -76,11 +76,12 @@ Qualitative comparison results with illumination or vegetation changes are shown
 ## Cite our work
 Please cite the following papers if you use our dataset:
 ```latex
-@article{SeasonDepth,
+@article{SeasonDepth2023hu,
   title={SeasonDepth: Cross-Season Monocular Depth Prediction Dataset and Benchmark under Multiple Environments},
-  author={Hu, Hanjiang and Yang, Baoquan and Qiao, Zhijian and Zhao, Ding and Wang, Hesheng},
-  journal={arXiv preprint arXiv:2011.04408},
-  year={2022}
+  author={Hu, Hanjiang and Yang, Baoquan and Qiao, Zhijian and Liu, Shiqi and Zhu, Jiacheng and Liu, Zuxin and Ding, Wenhao and Zhao, Ding and Wang, Hesheng},
+  journal={2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year={2023},
+  organization={IEEE}
 }
 ```
 
